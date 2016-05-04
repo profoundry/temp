@@ -17,8 +17,11 @@ struct TNode {
   TNode(T data) : k1{data} { ++count; }
   ~TNode();
 
+  void add(T data) { k2 = data; ++count; }
   bool is_full() { return count == 2; }
   void set_leaf() { is_leaf = !(l && m && r); }
+  int find_low(T);
+  void split(T);
 };
 
 template <class T>
@@ -26,6 +29,33 @@ TNode<T>::~TNode() {
   delete l;
   delete m;
   delete r;
+}
+template <class T>
+int TNode<T>::find_low(T data) {
+  if (data <= k1)
+    return -1;
+  if (data > k2)
+    return 1;
+  return 0;
+}
+
+template <class T>
+void TNode<T>::split(T data) {
+  // check if its root
+  if (!parent) {
+    // get the position where the key needs to go
+    switch (find_low(data)) {
+    case -1:
+
+      break;
+    case 1:
+
+      break;
+    default:
+
+      
+    }
+  }
 }
 
 template <class T>
@@ -55,9 +85,9 @@ void _23Tree<T>::insert(TNode<T>* node, T data) {
   if (node->is_leaf) {
     // check if the node is full
     if (node->is_full())
-      node->split();
+      node->split(data);
     else
-      node->k2 = data;
+      node->add(data);
   }
 }
 
