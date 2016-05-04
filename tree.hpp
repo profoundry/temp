@@ -9,6 +9,7 @@ struct TNode {
 
   T k1, k2;
 
+  TNode* p = nullptr;
   TNode* l = nullptr;
   TNode* m = nullptr;
   TNode* r = nullptr;
@@ -50,7 +51,14 @@ void _23Tree<T>::insert(T data) {
 
 template <class T>
 void _23Tree<T>::insert(TNode<T>* node, T data) {
-  
+  // check if the node is a leaf
+  if (node->is_leaf) {
+    // check if the node is full
+    if (node->is_full())
+      node->split();
+    else
+      node->k2 = data;
+  }
 }
 
 
