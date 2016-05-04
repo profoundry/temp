@@ -17,7 +17,7 @@ struct TNode {
   ~TNode();
 
   bool is_full() { return count == 2; }
-  void set_leaf() { is_leaf = l & m & r; }
+  void set_leaf() { is_leaf = !(l && m && r); }
 };
 
 template <class T>
