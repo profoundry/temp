@@ -42,24 +42,27 @@ int TNode<T>::find_low(T data) {
 template <class T>
 void TNode<T>::split(T data) {
   // check if its root
-  if (!parent) {
+  if (!p) {
     // get the position where the key needs to go
     switch (find_low(data)) {
     case -1:
-      parent = new TNode<T>(k1);
-      parent->l = new TNode<T>(data);
-      parent->m = this;
+      p = new TNode<T>(k1);
+      p->l = new TNode<T>(data);
+      p->l->p = p;
+      p->m = this;
       k1 = k2;
       break;
     case 1:
-      parent = new TNode<T>(k2);
-      parent->m = new TNode<T>(data);
-      parent->l = this;
+      p = new TNode<T>(k2);
+      p->m = new TNode<T>(data);
+      p->m->p = p;
+      p->l = this;
       break;
     default:
-      parent = new TNode<T>(data);
-      parent->m = new TNode<T>(k2);
-      parent->l = this;
+      p = new TNode<T>(data);
+      p->m = new TNode<T>(k2);
+      p->m->p = p;
+      p->l = this;
     }
     --count;
   }
